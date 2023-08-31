@@ -37,6 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'ACCESSIBLE_COMBOBOX_GRAVITY_FORMS_VERSION', '1.0.0' );
 
+add_action( 'gform_loaded', 'run_accessible_combobox_gravity_forms', 5 );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-accessible-combobox-gravity-forms-activator.php
@@ -74,9 +76,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-accessible-combobox-gravit
  * @since    1.0.0
  */
 function run_accessible_combobox_gravity_forms() {
+    if ( ! method_exists( 'GFForms', 'include_addon_framework' ) ) {
+        return;
+    }
 
 	$plugin = new Accessible_Combobox_Gravity_Forms();
 	$plugin->run();
-
 }
-run_accessible_combobox_gravity_forms();

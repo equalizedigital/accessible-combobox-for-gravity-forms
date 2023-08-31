@@ -100,4 +100,82 @@ class Accessible_Combobox_Gravity_Forms_Admin {
 
 	}
 
+    public function hook_gravity_form_dropdown_field_css( $classes, $field, $form ) {
+        if ( $field->type === 'select' && (int)$field->enableEnhancedUI ) {
+            $classes .= ' gfield--accessible-combobox';
+        }
+
+        return $classes;
+    }
+
+    public function hook_gravity_form_dropdown_field_content( $field_content, $field ) {
+
+//        if ( $field->type === 'select' && (int)$field->enableEnhancedUI ) {
+//            return str_replace( "<select", "<select multiple", $field_content );
+//        }
+
+        return $field_content;
+    }
+
+    public function hook_gravity_form_dropdown_field( $input, $field, $value, $lead_id, $form_id )
+    {
+
+        if ( $field->type !== 'select' ) {
+            return $input;
+        }
+
+        if ( $field->id !== 15) {
+            return $input;
+        }
+
+//        if ( ! (int)$field->enableEnhancedUI ) {
+//            return $input;
+//        }
+
+        $choices = $this->acgf_get_choices_from_field( $field->choices );
+
+//        $input = '
+//            <div class="combobox combobox-list">
+//              <div class="group">
+//                <input id="'. $field->inputName .'" class="cb_edit" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cb1-listbox">
+//                <button id="cb1-button" tabindex="-1" aria-label="States" aria-expanded="false" aria-controls="cb1-listbox">
+//                  <svg width="18" height="16" aria-hidden="true" focusable="false" style="forced-color-adjust: auto">
+//                    <polygon class="arrow" stroke-width="0" fill-opacity="0.75" fill="currentcolor" points="3,6 15,6 9,14"></polygon>
+//                  </svg>
+//                </button>
+//              </div>
+//              <ul id="cb1-listbox" role="listbox" aria-label="States">
+//                '. $choices .'
+//              </ul>
+//            </div>
+//        ';
+
+//        var_dump($field);
+
+        $input = '
+            <div class="usa-combo-box">
+              <select name="input_'.$field->id.'" id="input_'.$form_id.'_'.$field->id.'" class="usa-select">
+                <option value class="gf_placeholder">'.$field->placeholder.'</option>
+                '. $choices .'
+              </select>
+            </div>
+        ';
+
+        return $input;
+    }
+
+    /**
+     * @param $choices
+     * @return string
+     */
+    private function acgf_get_choices_from_field( $choices ): string
+    {
+        $options = "";
+
+        foreach( $choices as $choice ) {
+            $options .= "<option value=\"{$choice['value']}\">{$choice['text']}</option>";
+        }
+
+        return $options;
+    }
 }
