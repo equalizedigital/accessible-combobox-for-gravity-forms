@@ -158,33 +158,20 @@ class Accessible_Combobox_Gravity_Forms {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
         $this->loader->add_filter(
-            'gform_field_css_class', $plugin_admin,
+            'gform_field_css_class',
+            $plugin_admin,
             'hook_gravity_form_dropdown_field_css',
             10,
             3
         );
 
         $this->loader->add_filter(
-            'gform_field_input', $plugin_admin,
+            'gform_field_input',
+            $plugin_admin,
             'hook_gravity_form_dropdown_field',
             10,
             5
         );
-
-        $this->loader->add_filter(
-            'gform_field_content', $plugin_admin,
-            'hook_gravity_form_dropdown_field_content',
-            10,
-            2
-        );
-
-        $this->loader->add_filter(
-            'gform_field_content', $plugin_admin,
-            'hook_gravity_form_dropdown_field_content',
-            10,
-            2
-        );
-
 	}
 
 	/**
