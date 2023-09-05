@@ -100,4 +100,53 @@ class Accessible_Combobox_Gravity_Forms_Admin {
 
 	}
 
+    public function hook_gravity_form_dropdown_field_css( $classes, $field, $form ) {
+        if ( $field->type === 'select' && (int)$field->enableEnhancedUI ) {
+            $classes .= ' gfield--accessible-combobox';
+        }
+
+        return $classes;
+    }
+
+    public function hook_gravity_form_dropdown_field( $input, $field, $value, $lead_id, $form_id )
+    {
+
+        if ( $field->type !== 'select' ) {
+            return $input;
+        }
+
+        if ( ! (int)$field->enableEnhancedUI ) {
+            return $input;
+        }
+
+        $field->enableEnhancedUI = false;
+
+        $choices = $this->acgf_get_choices_from_field( $field->choices );
+
+        $input = '
+            <div class="usa-combo-box">
+              <select name="input_'.$field->id.'" id="input_'.$form_id.'_'.$field->id.'" class="usa-select">
+                <option value class="gf_placeholder">'.$field->placeholder.'</option>
+                '. $choices .'
+              </select>
+            </div>
+        ';
+
+        return $input;
+    }
+
+    /**
+     * @param $choices
+     * @return string
+     */
+    private function acgf_get_choices_from_field( $choices ): string
+    {
+        $options = "";
+
+        foreach( $choices as $choice ) {
+            $options .= "<option value=\"{$choice['value']}\">{$choice['text']}</option>";
+        }
+
+        return $options;
+    }
 }

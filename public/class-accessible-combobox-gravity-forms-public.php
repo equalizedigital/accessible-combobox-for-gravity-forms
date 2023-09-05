@@ -97,6 +97,8 @@ class Accessible_Combobox_Gravity_Forms_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/accessible-combobox-gravity-forms-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'uswds-init', plugin_dir_url( __FILE__ ) . 'js/uswds.init.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'uswds-min', plugin_dir_url( __FILE__ ) . 'js/uswds.min.js', array( 'jquery' ), $this->version, true );
 
 	}
 

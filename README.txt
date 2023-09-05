@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: equalizedigital, alh0319, stevejonesdev
+Contributors: equalizedigital, alh0319, stevejonesdev, michelmany
 Tags: Gravity Forms, accessibility, accessible, forms
 Requires at least: 3.0.1
 Tested up to: 3.4
